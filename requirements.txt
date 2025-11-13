@@ -5,4 +5,5 @@ imbalanced-learn
 SQLAlchemy
 PyMySQL
 joblib
-pymysql
+flask
+gunicorn
