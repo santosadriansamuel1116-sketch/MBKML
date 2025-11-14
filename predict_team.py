@@ -7,9 +7,9 @@ from sqlalchemy import create_engine, text
 # CONFIG
 # ----------------------------
 DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_USER = os.getenv("DB_USER", "root")
-DB_PASS = os.getenv("DB_PASS", "")
-DB_NAME = os.getenv("DB_NAME", "mbk_db")
+DB_USER = os.getenv("DB_USER", "u311577524_mbk_user")
+DB_PASS = os.getenv("DB_PASS", "@MBKGlamhub0812")
+DB_NAME = os.getenv("DB_NAME", "@MBKGlamhub0812")
 
 ENGINE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}?charset=utf8mb4"
 engine = create_engine(ENGINE_URL, pool_pre_ping=True)
