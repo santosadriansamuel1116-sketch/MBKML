@@ -83,18 +83,27 @@ def predict_team(payload: Dict) -> int:
       event_type, price_range, face_shape, skin_tone, hair_length,
       booking_date, booking_time
     """
+    print("[ML] Incoming payload:", payload, flush=True)
+
     valid = fetch_valid_teams(payload["booking_date"], payload["booking_time"])
+    print("[ML] Valid teams by schedule:", valid, flush=True)
+
     valid = filter_teams_by_gender(valid, int(payload.get("gender_preference", 0)))
+    print("[ML] Valid teams after gender filter:", valid, flush=True)
 
     feature_order = load_features()
     model = load_model_for_event(int(payload.get("event_type", 0)))
     x = make_feature_vector(payload, feature_order)
 
     pred = int(model.predict(x)[0])
+    print("[ML] Raw model prediction:", pred, flush=True)
+
     if pred not in valid and valid:
         probs = model.predict_proba(x)[0]
         classes = list(model.classes_)
         best = max(valid, key=lambda t: probs[classes.index(t)] if t in classes else -1.0)
+        print("[ML] Adjusted prediction (respecting availability):", best, flush=True)
         return int(best)
-    return pred
 
+    print("[ML] Final prediction:", pred, flush=True)
+    return pred
